@@ -1,0 +1,39 @@
+<h1>Hi {{currentUser.firstName}}!</h1>
+<p>You're logged in to your HRS App!!</p>
+<h3>All registered users:</h3>
+<!-- <ul>
+  <li *ngFor="let user of users">
+    {{user.username}} ({{user.firstName}} {{user.lastName}})
+    - <a (click)="deleteUser(user.id)" class="text-danger">Delete</a>
+  </li>
+</ul> -->
+
+<table class="table" *ngIf="users && users.length > 0">
+  <thead>
+    <tr>
+      <th scope="col">First Name</th>
+      <th scope="col">Last Name</th>
+      <th scope="col">User Name</th>
+      <th scope="col">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let user of users">
+      <td *ngIf="state === 'VIEW'">{{user.firstName}}</td>
+      <td *ngIf="state === 'VIEW'">{{user.lastName}}</td>
+      <td *ngIf="state === 'EDIT'">
+        <input type="text" class="form-control" placeholder="First Name" [(ngModel)]="userToEdit.firstName">
+      </td>
+      <td *ngIf="state === 'EDIT'">
+        <input type="text" class="form-control" placeholder="First Name" [(ngModel)]="userToEdit.lastName">
+      </td>
+      <td>{{user.username}}</td>
+      <td>
+        <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+        <span role="button" class="badge badge-pill badge-primary mr-2 cursor-pointer" *ngIf="state === 'VIEW'" (click)="editUser(user)" >Edit</span>
+        <span role="button" class="badge badge-pill badge-danger cursor-pointer" *ngIf="state === 'VIEW'" (click)="deleteUser(user.id)" >Delete</span>
+        <span role="button" class="badge badge-pill badge-info cursor-pointer" *ngIf="state === 'EDIT' && !loading" (click)="updateUser()" >Update</span>
+      </td>
+    </tr>
+  </tbody>
+</table>
